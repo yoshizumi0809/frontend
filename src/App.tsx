@@ -9,7 +9,8 @@ import { UserProvider } from "./providers/UserProvider.tsx";
 function App() {
   return (
     <div className="App">
-      <UserProvider><Routes>
+      <UserProvider>
+        <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="/main" element={<Main />} />
         </Routes>
