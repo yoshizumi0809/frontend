@@ -10,12 +10,26 @@ export default function SideBar() {
   const { setPostList } = useContext(PostListContext);
 
   const getPostList = async () => {
+    /* 
+    変数postsは以下のような感じ
+  [
+  　{
+    id: 1,
+    user_name: "Taro",
+    content: "こんにちは！",
+    created_at: "2025-04-01T12:00:00.000Z"
+  　},
+  ...
+  ]
+    */
     const posts = await getList(userInfo.token);
 
     console.log(posts);
+    //ポストを格納する配列を初期化
     let postList: Array<PostType> = [];
     if (posts) {
       console.log(posts);
+      
       posts.forEach((p: any) => {
         postList.push({
           id: p.id,
