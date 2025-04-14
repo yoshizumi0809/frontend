@@ -35,7 +35,7 @@ export default function SideBar() {
           id: p.id,
           user_name: p.user_name,
           content: p.content,
-          created_at: new Date(p.created_at),
+          created_at: new Date(p.created_at),//Data型に変換
         });
       });
     }
