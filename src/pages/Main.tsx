@@ -18,4 +18,3 @@ export default function Main() {
     </PostListProvider>
   );
 }
-//test
