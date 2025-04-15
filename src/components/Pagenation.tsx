@@ -5,7 +5,6 @@ import { PostListContext } from '../providers/PostListProvider.tsx';
 export default function Pagenation(){
 
     const {page, setPage} = useContext(PostListContext)
-
     const gotoPreviousPage = () =>{
         setPage(Math.max(1, page - 1));
     }
@@ -16,7 +15,7 @@ export default function Pagenation(){
 
     return(
         <SPagenation>
-            <button onClick={gotoPreviousPage}>« 前のページ</button>
+            <button onClick={gotoPreviousPage} disabled={page === 1}>« 前のページ</button>
             <button onClick={gotoNextPage}>次のページ »</button>
         </SPagenation>
     )
