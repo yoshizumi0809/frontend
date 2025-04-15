@@ -39,11 +39,15 @@ export default function PostList() {
 	  }, [page]);
 
 	  return (
-		<SPostList>
-		  {postList.map((p) => (
-			<Post key={p.id} post={p} />
-		  ))}
-		</SPostList>
+		<>
+			<SPostList>
+			{postList.map((p) => (
+				<Post key={p.id} post={p} />
+			))}
+			</SPostList>
+			<SReloadButton onClick={getPostList}>リロード</SReloadButton>
+		</>
+		
 	  );
 }
 
@@ -51,4 +55,11 @@ const SPostList = styled.div`
   margin-top: 16px;
   height: 100%;
   overflow-y: scroll;
+`
+const SReloadButton = styled.button`
+  background-color: #222222;
+  padding: 4px;
+  border-radius: 8px;
+  color: #fafafa;
+  width: 100%;
 `
