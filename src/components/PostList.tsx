@@ -7,14 +7,17 @@ import { getList } from '../api/Post.tsx';
 
 export default function PostList() {
 	// ポストリストコンテキスト、ユーザーコンテキストを使用する
-	const { postList, setPostList } = useContext(PostListContext);
+	const { postList, setPostList, page } = useContext(PostListContext);
 	const { userInfo } = useContext(UserContext);
 
 
 	// ポスト一覧を取得する関数
 
+	const POSTS_PER_PAGE = 10;
+	const start = (page - 1) * POSTS_PER_PAGE; // ← あとでページ番号に応じて変える
+
 	const getPostList = async() => {
-		const posts = await getList(userInfo.token);
+		const posts = await getList(userInfo.token, start, POSTS_PER_PAGE);
 		console.log(posts);
 	
 		// getListで取得したポスト配列をコンテキストに保存する
@@ -33,7 +36,7 @@ export default function PostList() {
 
 	  useEffect(() => {
 		getPostList();
-	  }, []);
+	  }, [page]);
 
 	  return (
 		<SPostList>

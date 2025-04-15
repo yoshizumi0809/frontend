@@ -1,9 +1,11 @@
+//一個一個の投稿に対する表示について
+
 import React from 'react';
 import styled from "styled-components";
 import { ReactNode } from 'react';
 
 export default function Post(props: any) {
-  const { children, post } = props;
+  const { post } = props;
   const getDateStr = (dateObj: Date) => {
     const year = post.created_at.getFullYear();
     const month = post.created_at.getMonth() + 1;
