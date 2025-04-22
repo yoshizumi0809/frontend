@@ -11,6 +11,7 @@ import { sign_in } from "../api/Auth.tsx";
     const [pass, setPass] = useState("");
     const { userInfo, setUserInfo } = useContext(UserContext);
   
+    //ログインボタンを押したときの関数
     const onSignInClick = async () => {
       const ret = await sign_in(userId, pass);
       console.log("レスポンス全体:", ret);         // AxiosResponse
@@ -38,7 +39,7 @@ import { sign_in } from "../api/Auth.tsx";
               id="id"
               value={userId}
               type="text"
-              onChange={(evt) => setUserId(evt.target.value)}
+              onChange={(evt) => setUserId(evt.target.value)} //入力された文字列をuserIdとして更新
             />
           </SSignInInput>
         </SSignInRow>

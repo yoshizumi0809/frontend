@@ -8,8 +8,6 @@ type UserInfo = {
   token: string;
 };
 
-
-
 // UserContextの作成
 // UserContextには ProviderとConsumerの二つのフィールドが含まれる
 export const UserContext = createContext(
@@ -19,10 +17,7 @@ export const UserContext = createContext(
   },
 );
 
-
-
 // UserProviderの定義
-
 export const UserProvider = (props: any) => {
   const { children } = props;
   // UserInfoを保持する変数と更新関数の作成

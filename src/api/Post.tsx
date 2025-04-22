@@ -17,4 +17,10 @@ const getList = async (token: string, start = 0, records = 10) => {
   return res.data;
 };
 
-export { post, getList };
+const deletePost = async (postId: number, token: string) => {
+  const url = `http://localhost:3001/post/${postId}?token=${token}`;
+  const res = await axios.delete(url);
+  console.log(res);
+};
+
+export { post, getList, deletePost };

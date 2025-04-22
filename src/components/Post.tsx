@@ -1,11 +1,18 @@
 //一個一個の投稿に対する表示について
 
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from "styled-components";
 import { ReactNode } from 'react';
+import { deletePost, getList } from '../api/Post.tsx';
+import { UserContext } from '../providers/UserProvider.tsx';
+import { PostListContext } from '../providers/PostListProvider.tsx';
 
 export default function Post(props: any) {
   const { post } = props;
+  const { userInfo } = useContext(UserContext);
+  const { setPostList, page } = useContext(PostListContext);
+  const POSTS_PER_PAGE = 10;
+
   const getDateStr = (dateObj: Date) => {
     const year = post.created_at.getFullYear();
     const month = post.created_at.getMonth() + 1;
@@ -14,6 +21,16 @@ export default function Post(props: any) {
     const min = post.created_at.getMinutes();
     const sec = post.created_at.getSeconds();
     return `${year}年${month}月${date}日 ${hour}時${min}分${sec}秒`;
+  };
+
+  const onDeletePost = async () => {
+    await deletePost(post.id, userInfo.token);
+    const newPosts = await getList(userInfo.token, (page - 1) * POSTS_PER_PAGE, POSTS_PER_PAGE);
+    const postList = newPosts.map((p: any) => ({
+      ...p,
+      created_at: new Date(p.created_at),
+    }));
+    setPostList(postList);
   };
 
   const getLines = (src: string):ReactNode => {
@@ -31,7 +48,8 @@ export default function Post(props: any) {
     <SPost>
       <div>
         <SName>{post.user_name}</SName>
-        <SDate>{getDateStr(post.craeted_at)}</SDate>
+        <SDate>{getDateStr(post.created_at)}</SDate>
+        <span><SDeleteButton onClick={onDeletePost}>投稿を削除</SDeleteButton></span>
       </div>
       <div>{getLines(post.content)}</div>
     </SPost>
@@ -54,4 +72,11 @@ const SDate = styled.span`
   margin-left: 8px;
   font-size: small;
   color: #000044;
+`
+
+const SDeleteButton = styled.button`
+  background-color: #222222;
+  padding: 4px;
+  border-radius: 8px;
+  color: #fafafa;
 `
