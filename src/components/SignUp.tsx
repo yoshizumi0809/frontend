@@ -4,29 +4,33 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "../providers/UserProvider.tsx";
 import { sign_in } from "../api/Auth.tsx";
+import { sign_up } from '../api/User.tsx';
   
   export default function SignUp() {
     const navigate = useNavigate();
     const [userId, setUserId] = useState("");
+    const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const { userInfo, setUserInfo } = useContext(UserContext);
   
     //ログインボタンを押したときの関数
-    const onSignInClick = async () => {
-      const ret = await sign_in(userId, pass);
-      console.log("レスポンス全体:", ret);         // AxiosResponse
-      console.log("レスポンス data:", ret.data);   // 実際のデータ部分
-      if (ret.data) {
-        console.log("レスポンス data.token:", ret.data.token);
-      }
-      setUserInfo({
-        id: ret.data.user_id,
-        token: ret.data.token,
-      });
-      if (ret && ret.data && ret.data.token) {
-        navigate('/main');
-      }
-    };
+    const onSignUpClick = async () => {
+        try {
+          const res = await sign_up(userId, email, pass);
+      
+          // 登録成功したときの処理
+          console.log("登録成功:", res.data);
+      
+          alert("登録が完了しました！ログインしてください。");
+      
+          // ログイン画面に戻る
+          navigate("/signin");
+      
+        } catch (err: any) {
+          console.error("登録エラー:", err);
+          alert("登録に失敗しました。ユーザー名やメールアドレスがすでに使われている可能性があります。");
+        }
+      };
   
     return (
       <SSignInFrame>
@@ -59,7 +63,7 @@ import { sign_in } from "../api/Auth.tsx";
         </SSignInRow>
   
         <SSignInRow>
-          <SLoginButton type="button" onClick={onSignInClick}>
+          <SLoginButton type="button" onClick={onSignUpClick}>
             Login
           </SLoginButton>
         </SSignInRow>
