@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { PostListContext } from '../providers/PostListProvider';
+import { PostListContext } from '../providers/PostListProvider.tsx';
 
 export default function SearchPost(){
     const { postList, setPostList } = useContext(PostListContext); // コンテキストから取得
