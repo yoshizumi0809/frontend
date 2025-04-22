@@ -4,13 +4,14 @@ import { PostListContext } from '../providers/PostListProvider.tsx';
 export default function SearchPost(){
     const { postList, setPostList } = useContext(PostListContext); // コンテキストから取得
     const [searchText, setSearchText] = useState('');
+    const [originalPostList] = useState(postList); // 元の配列のコピー
 
     const onSearchPost = () => {
-    const filtered = postList.filter(post =>
-      post.content.includes(searchText)
-    );
-    setPostList(filtered); // 絞り込んだリストに置き換え（元に戻す機能もあとで入れると良い）
-  };
+        const filtered = originalPostList.filter(post =>
+          post.content.includes(searchText)
+        );
+        setPostList(filtered);
+    };
 
     return(
         

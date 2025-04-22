@@ -14,7 +14,7 @@ export default function PostList() {
 	// ポスト一覧を取得する関数
 
 	const POSTS_PER_PAGE = 10;
-	const start = (page - 1) * POSTS_PER_PAGE; // ← あとでページ番号に応じて変える
+	const start = (page - 1) * POSTS_PER_PAGE;
 
 	const getPostList = async() => {
 		const posts = await getList(userInfo.token, start, POSTS_PER_PAGE);
