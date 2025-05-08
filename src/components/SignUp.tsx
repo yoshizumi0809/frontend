@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "../providers/UserProvider.tsx";
-import { sign_in } from "../api/Auth.tsx";
+//import { sign_in } from "../api/Auth.tsx";
 import { sign_up } from '../api/User.tsx';
   
   export default function SignUp() {
@@ -11,7 +11,7 @@ import { sign_up } from '../api/User.tsx';
     const [userId, setUserId] = useState("");
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
-    const { userInfo, setUserInfo } = useContext(UserContext);
+    //const { userInfo, setUserInfo } = useContext(UserContext);
   
     //ログインボタンを押したときの関数
     const onSignUpClick = async () => {
@@ -24,54 +24,69 @@ import { sign_up } from '../api/User.tsx';
           alert("登録が完了しました！ログインしてください。");
       
           // ログイン画面に戻る
-          navigate("/signin");
+          navigate("/signIn");
       
         } catch (err: any) {
-          console.error("登録エラー:", err);
-          alert("登録に失敗しました。ユーザー名やメールアドレスがすでに使われている可能性があります。");
-        }
+            console.error("登録エラー:", err);
+            const message = err.response?.data?.message || err.message || "登録に失敗しました";
+            alert(`登録失敗：${message}`);
+          }
       };
   
     return (
-      <SSignInFrame>
-        <SSignInRow>
-          <SSignInLabel>
+      <SSignUpFrame>
+        <SSignUpRow>
+          <SSignUpLabel>
             <label htmlFor="id">ID</label>
-          </SSignInLabel>
-          <SSignInInput>
+          </SSignUpLabel>
+          <SSignUpInput>
             <input
               id="id"
               value={userId}
               type="text"
               onChange={(evt) => setUserId(evt.target.value)} //入力された文字列をuserIdとして更新
             />
-          </SSignInInput>
-        </SSignInRow>
+          </SSignUpInput>
+        </SSignUpRow>
   
-        <SSignInRow>
-          <SSignInLabel>
+        <SSignUpRow>
+          <SSignUpLabel>
             <label htmlFor="password">Password</label>
-          </SSignInLabel>
-          <SSignInInput>
+          </SSignUpLabel>
+          <SSignUpInput>
             <input
               id="password"
               value={pass}
               type="password"
               onChange={(evt) => setPass(evt.target.value)}
             />
-          </SSignInInput>
-        </SSignInRow>
+          </SSignUpInput>
+        </SSignUpRow>
+
+        <SSignUpRow>
+          <SSignUpLabel>
+            <label htmlFor="email">email</label>
+          </SSignUpLabel>
+          <SSignUpInput>
+            <input
+              id="email"
+              value={email}
+              type="email"
+              onChange={(evt) => setEmail(evt.target.value)}
+            />
+          </SSignUpInput>
+        </SSignUpRow>
   
-        <SSignInRow>
+        <SSignUpRow>
           <SLoginButton type="button" onClick={onSignUpClick}>
-            Login
+            Register
           </SLoginButton>
-        </SSignInRow>
-      </SSignInFrame>
+        </SSignUpRow>
+      </SSignUpFrame>
     );
   }
   
-  const SSignInFrame = styled.div`
+  const SSignUpFrame = styled.div`
     background-color: #f8f8f8;
     margin: 80px;
     padding-top: 8px;
@@ -80,13 +95,13 @@ import { sign_up } from '../api/User.tsx';
     box-shadow: 0 8px 8px #aaaaaa;
   `;
   
-  const SSignInRow = styled.div`
+  const SSignUpRow = styled.div`
     dixplay: inline-block; /* Probably a typo: should be "display" */
     margin-top: 4px;
     margin-bottom: 4px;
   `;
   
-  const SSignInLabel = styled.span`
+  const SSignUpLabel = styled.span`
     display: inline-block;
     width: 25%;
     vertical-align: top;
@@ -94,7 +109,7 @@ import { sign_up } from '../api/User.tsx';
     margin-right: 4px;
   `;
   
-  const SSignInInput = styled.span`
+  const SSignUpInput = styled.span`
     display: inline-block;
     width: auto;
     vertical-align: top;

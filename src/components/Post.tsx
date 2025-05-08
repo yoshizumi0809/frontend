@@ -6,12 +6,17 @@ import { ReactNode } from 'react';
 import { deletePost, getList } from '../api/Post.tsx';
 import { UserContext } from '../providers/UserProvider.tsx';
 import { PostListContext } from '../providers/PostListProvider.tsx';
+import { useNavigate } from 'react-router-dom';
 
 export default function Post(props: any) {
   const { post } = props;
   const { userInfo } = useContext(UserContext);
   const { setPostList, page } = useContext(PostListContext);
+  const navigate = useNavigate();
   const POSTS_PER_PAGE = 10;
+
+  console.log("自分のID:", userInfo.id, typeof userInfo.id);
+  console.log("投稿者ID:", post.user_id, typeof post.user_id);
 
   const getDateStr = (dateObj: Date) => {
     const year = post.created_at.getFullYear();
@@ -47,9 +52,13 @@ export default function Post(props: any) {
   return (
     <SPost>
       <div>
-        <SName>{post.user_name}</SName>
+        <SName onClick={() => navigate(`/users/${post.user_id}`)}>{post.user_name}</SName>
         <SDate>{getDateStr(post.created_at)}</SDate>
-        <span><SDeleteButton onClick={onDeletePost}>投稿を削除</SDeleteButton></span>
+        {userInfo.id === post.user_id && (
+          <span>
+            <SDeleteButton onClick={onDeletePost}>投稿を削除</SDeleteButton>
+          </span>
+        )}
       </div>
       <div>{getLines(post.content)}</div>
     </SPost>
@@ -63,7 +72,7 @@ const SPost = styled.div`
   padding-left: 8px;
 `
 
-const SName = styled.span`
+const SName = styled.button`
   font-size: small;
   color: #000044;
 `

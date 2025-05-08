@@ -4,6 +4,7 @@ import React, { createContext, Dispatch, SetStateAction, useState } from "react"
 export type PostType = {
   id: number;
   user_name: string;
+  user_id: number;
   content: string;
   created_at: Date;
 };

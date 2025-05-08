@@ -34,6 +34,7 @@ export default function SideBar() {
         postList.push({
           id: p.id,
           user_name: p.user_name,
+          user_id: p.user_id,
           content: p.content,
           created_at: new Date(p.created_at),//Data型に変換
         });

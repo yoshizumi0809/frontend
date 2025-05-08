@@ -6,4 +6,15 @@ const getUser = async (user_id: number, token: string) => {
   return res.data;
 };
 
-export { getUser };
+const sign_up = async (user_id: string, email: string, pass: string) => {
+  const data = {
+    name: user_id,
+    email: email,
+    password: pass
+  };
+  const url = `http://localhost:3001/user?user_id=${user_id}&email=${email}&password=${pass}`;
+  const res = await axios.post(url,data);
+  return res
+};
+
+export { getUser, sign_up };

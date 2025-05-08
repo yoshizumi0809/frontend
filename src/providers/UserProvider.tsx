@@ -9,7 +9,6 @@ type UserInfo = {
 };
 
 // UserContextの作成
-// UserContextには ProviderとConsumerの二つのフィールドが含まれる
 export const UserContext = createContext(
   {} as {
     userInfo: UserInfo;
@@ -23,6 +22,7 @@ export const UserProvider = (props: any) => {
   // UserInfoを保持する変数と更新関数の作成
   const [userInfo, setUserInfo] = useState<UserInfo>({ id: 0, token: "" });
   return (
+    //valueに格納されている変数を子componentが取得できるようにする。
     <UserContext.Provider value={{ userInfo, setUserInfo }}>
       {children}
     </UserContext.Provider>

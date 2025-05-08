@@ -7,6 +7,7 @@ import './App.css';
 import { UserProvider } from "./providers/UserProvider.tsx";
 import StartPage from './pages/StartPage.tsx';
 import SignUp from './pages/SignUp.tsx';
+import UserEditLayout from './components/UserEditLayout.tsx';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/main" element={<Main />} />
+          <Route path="/edit" element={<UserEditLayout />} />
         </Routes>
       </UserProvider>  
     </div>
