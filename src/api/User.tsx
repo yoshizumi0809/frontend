@@ -6,6 +6,11 @@ const getUser = async (user_id: number, token: string) => {
   return res.data;
 };
 
+const getUserInfo = async (user_id: number) => {
+  const res = await axios.get(`http://localhost:3001/user/info/${user_id}`);
+  return res.data;
+};
+
 const sign_up = async (user_id: string, email: string, pass: string) => {
   const data = {
     name: user_id,
@@ -17,4 +22,4 @@ const sign_up = async (user_id: string, email: string, pass: string) => {
   return res
 };
 
-export { getUser, sign_up };
+export { getUser, sign_up, getUserInfo };

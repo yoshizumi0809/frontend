@@ -8,6 +8,7 @@ import { UserProvider } from "./providers/UserProvider.tsx";
 import StartPage from './pages/StartPage.tsx';
 import SignUp from './pages/SignUp.tsx';
 import UserEditLayout from './components/UserEditLayout.tsx';
+import UserProfile from './pages/UserProfile.tsx';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/main" element={<Main />} />
           <Route path="/edit" element={<UserEditLayout />} />
+          <Route path="/users/:user_id" element={<UserProfile />} />
         </Routes>
       </UserProvider>  
     </div>

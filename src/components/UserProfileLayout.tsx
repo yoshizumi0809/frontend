@@ -1,16 +1,21 @@
 import React from 'react';
-import UserEdit from './UserEdit.tsx';
 import Header from './Header.tsx';
 import styled from 'styled-components';
+import UserProfileContent from './UserProfileContent.tsx';
 
-export default function UserEditLayout(){
+type Props = {
+    user_id?: string;
+};
+
+export default function UserProfileLayout(props:Props){
+    const { user_id } = props;
     return (
     <>
       <SHeader>
         <Header></Header>
       </SHeader>
       <SBody>
-        <UserEdit></UserEdit>
+        <UserProfileContent user_id={user_id} />
       </SBody>
     </>
   );

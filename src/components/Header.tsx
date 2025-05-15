@@ -26,9 +26,9 @@ export default function Header() {
   return (
 
     <SHeader>
-      <SLogo>MicroPost</SLogo>
+      <SLogo onClick={() => navigate(`/main`)}>MicroPost</SLogo>
       <SRightItem>
-        <SName>{userName}</SName>
+        <SName onClick={() => navigate(`/users/${userInfo.id}`)}>{userName}</SName>
         <SLogout onClick={logout}>ログアウト</SLogout>
       </SRightItem>
     </SHeader>
@@ -45,7 +45,7 @@ const SHeader = styled.div`
   height: 100%;
 `
 
-const SLogo = styled.div`
+const SLogo = styled.button`
   padding-top: 8px;
   padding-bottom: 8px;
   text-align: center;
@@ -59,7 +59,7 @@ const SRightItem = styled.div`
   justify-content: end;
 `
 
-const SName = styled.div`
+const SName = styled.button`
   padding-top: 8px;
   padding-bottom: 8px;
   text-align: center;
