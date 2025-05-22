@@ -28,7 +28,7 @@ export default function UserEdit(){
           <SEditInput>
             <input
               id="userName"
-              defaultValue={userName}
+              value={userName}
               type="text"
             />
           </SEditInput>
@@ -41,7 +41,7 @@ export default function UserEdit(){
           <SEditInput>
             <input
               id="user_id"
-              defaultValue={user_id}
+              value={user_id}
               type="text"
             />
           </SEditInput>
@@ -52,16 +52,13 @@ export default function UserEdit(){
             編集完了
           </SFinishEditButton>
         </SEditRow>
- 
-      <h2>ユーザーネーム: {userName}</h2>
-      <h2>ユーザーID: {user_id}</h2>
     </div>
     )
 }
 
 
 const SEditRow = styled.div`
-    display: inline-block; /* Probably a typo: should be "display" */
+    display: block;
     margin-top: 4px;
     margin-bottom: 4px;
   `;
