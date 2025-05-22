@@ -29,6 +29,7 @@ export default function UserEdit(){
             <input
               id="userName"
               value={userName}
+              onChange={(e) => setUserName(e.target.value)}
               type="text"
             />
           </SEditInput>
