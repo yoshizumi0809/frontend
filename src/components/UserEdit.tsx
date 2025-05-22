@@ -49,7 +49,7 @@ export default function UserEdit(){
 
         <SEditRow>
           <SFinishEditButton type="button" onClick={() => {}}>
-            編集完了
+            編集完了!
           </SFinishEditButton>
         </SEditRow>
     </div>
