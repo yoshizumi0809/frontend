@@ -14,30 +14,22 @@ export default function UserProfileContent(props: Props) {
   const navigate = useNavigate();
 
   const [displayUserName, setDisplayUserName] = useState('（読み込み中...）');
-  const [myUserId, setMyUserId] = useState<string | null>(null); // 自分の user_id
+  const [myUserId, setMyUserId] = useState<string | null>(null); // ログイン中のユーザーの user_id
 
-  // 表示対象ユーザーの名前取得
+  // 表示対象ユーザーの名前を取得
   useEffect(() => {
     if (!user_id) return;
     getUserInfo(Number(user_id))
-      .then((res) => {
-        setDisplayUserName(res.name);
-      })
-      .catch(() => {
-        setDisplayUserName('取得失敗...');
-      });
+      .then((res) => setDisplayUserName(res.name))
+      .catch(() => setDisplayUserName('取得失敗...'));
   }, [user_id]);
 
-  // ログイン中のユーザーの user_id を取得
+  // ログイン中ユーザーの user_id を取得
   useEffect(() => {
     if (!userInfo.id) return;
     getUserInfo(userInfo.id)
-      .then((res) => {
-        setMyUserId(res.user_id); // ここが string 型になる想定
-      })
-      .catch(() => {
-        setMyUserId(null);
-      });
+      .then((res) => setMyUserId(res.user_id)) // <- ここでログイン中の user_id を取得
+      .catch(() => setMyUserId(null));
   }, [userInfo.id]);
 
   return (
