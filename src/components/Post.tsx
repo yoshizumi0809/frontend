@@ -7,6 +7,7 @@ import { deletePost, getList } from '../api/Post.tsx';
 import { UserContext } from '../providers/UserProvider.tsx';
 import { PostListContext } from '../providers/PostListProvider.tsx';
 import { useNavigate } from 'react-router-dom';
+import { getUserInfo } from '../api/User.tsx';
 
 export default function Post(props: any) {
   const { post } = props;
@@ -52,7 +53,7 @@ export default function Post(props: any) {
   return (
     <SPost>
       <div>
-        <SName onClick={() => navigate(`/users/${post.user_id}`)}>{post.user_name}</SName>
+        <SName onClick={() => navigate(`/users/${getUserInfo(post.user_id)}`)}>{post.user_name}</SName>
         <SDate>{getDateStr(post.created_at)}</SDate>
         {userInfo.id === post.user_id && (
           <span>
