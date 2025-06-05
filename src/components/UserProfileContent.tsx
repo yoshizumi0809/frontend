@@ -19,7 +19,7 @@ export default function UserProfileContent(props: Props) {
   // 表示対象ユーザーの名前を取得
   useEffect(() => {
     if (!user_id) return;
-    getUserInfo(Number(user_id))
+    getUserInfo(userInfo.id)
       .then((res) => setDisplayUserName(res.name))
       .catch(() => setDisplayUserName('取得失敗...'));
   }, [user_id]);
