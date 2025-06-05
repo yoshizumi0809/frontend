@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../providers/UserProvider.tsx';
 import styled from 'styled-components';
-import { getUserInfo } from '../api/User.tsx';
+import { editUser, getUserInfo } from '../api/User.tsx';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserEdit(){
-      const { userInfo } = useContext(UserContext);
+      const { userInfo, setUserInfo } = useContext(UserContext);
       const [ userName, setUserName ] = useState<string>('（読み込み中...）');
       const user_id = userInfo.id;
+      const navigate = useNavigate();
       useEffect(() => {
         if (!user_id) return;
     
@@ -49,8 +51,20 @@ export default function UserEdit(){
         </SEditRow>
 
         <SEditRow>
-          <SFinishEditButton type="button" onClick={() => {}}>
-            編集完了!
+          <SFinishEditButton
+              type="button"
+              onClick={async () => {
+                try {
+                  const updated = await editUser({ id: user_id, name: userName });
+                  alert("編集完了しました！");
+                  // 必要なら setUserInfo で更新
+                } catch (err) {
+                  alert("更新に失敗しました");
+                  console.error(err);
+                }
+              }}
+            >
+              編集完了!
           </SFinishEditButton>
         </SEditRow>
     </div>
