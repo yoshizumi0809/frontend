@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const getUser = async (user_id: number, token: string) => {
-  const url = `http://localhost:3001/user/${user_id}?token=${token}`;
+const getUser = async (id: number, token: string) => {
+  const url = `http://localhost:3001/user/${id}?token=${token}`;
   const res = await axios.get(url);
   return res.data;
 };
@@ -22,4 +22,11 @@ const sign_up = async (user_id: string, email: string, pass: string) => {
   return res
 };
 
-export { getUser, sign_up, getUserInfo };
+const editUser = async (params: { id: number; user_id?: string; name?: string }) => {
+  const { id, ...updates } = params;
+  const url = `http://localhost:3001/user/${id}`;
+  const res = await axios.put(url, updates);  // 必要なフィールドだけ送る
+  return res.data;
+};
+
+export { getUser, sign_up, getUserInfo, editUser };

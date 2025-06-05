@@ -8,15 +8,19 @@ import { UserContext } from "../providers/UserProvider.tsx";
 export default function Main() {
   const { userInfo } = useContext(UserContext);
   const loggedIn = (userInfo.token !== '');
-  console.log(loggedIn);
+  const isNameMissing = (userInfo.name === undefined || userInfo.name === '');
+
+  if (!loggedIn) {
+    return <Navigate replace to="/" />;
+  }
+
+  if (loggedIn && isNameMissing) {
+    return <Navigate replace to="/register_name" />;
+  }
 
   return (
     <PostListProvider>
-    {
-      loggedIn ? <MainLayout />:<Navigate replace to="/" />
-    }
+      <MainLayout />
     </PostListProvider>
   );
 }
-
-//test

@@ -5,26 +5,22 @@ import styled from "styled-components";
 import { UserContext } from "../providers/UserProvider.tsx";
 //import { sign_in } from "../api/Auth.tsx";
 import { sign_up } from '../api/User.tsx';
+import { sign_in } from '../api/Auth.tsx';
   
   export default function SignUp() {
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     const [userId, setUserId] = useState("");
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     //const { userInfo, setUserInfo } = useContext(UserContext);
   
-    //ログインボタンを押したときの関数
+    //Registerボタンを押したときの関数
     const onSignUpClick = async () => {
         try {
-          const res = await sign_up(userId, email, pass);
-      
-          // 登録成功したときの処理
-          console.log("登録成功:", res.data);
-      
-          alert("登録が完了しました！ログインしてください。");
-      
-          // ログイン画面に戻る
-          navigate("/signIn");
+          await sign_up(userId, email, pass);      
+          alert("登録が完了しました！");
+  
+          await sign_in(userId, pass);
       
         } catch (err: any) {
             console.error("登録エラー:", err);
