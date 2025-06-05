@@ -17,7 +17,7 @@ export default function UserProfileContent(props: Props) {
   useEffect(() => {
     if (!user_id) return;
 
-    getUserInfo(Number(user_id))
+    getUserInfo(userInfo.id)
       .then((res) => {
         setUserName(res.name);
       })
