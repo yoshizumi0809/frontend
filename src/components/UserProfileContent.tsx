@@ -10,31 +10,46 @@ type Props = {
 
 export default function UserProfileContent(props: Props) {
   const { user_id } = props;
-  const [ userName, setUserName ] = useState<string>('（読み込み中...）');
   const { userInfo } = useContext(UserContext);
   const navigate = useNavigate();
 
+  const [displayUserName, setDisplayUserName] = useState('（読み込み中...）');
+  const [myUserId, setMyUserId] = useState<string | null>(null); // 自分の user_id
+
+  // 表示対象ユーザーの名前取得
   useEffect(() => {
     if (!user_id) return;
-
-    getUserInfo(userInfo.id)
+    getUserInfo(Number(user_id))
       .then((res) => {
-        setUserName(res.name);
+        setDisplayUserName(res.name);
       })
       .catch(() => {
-        setUserName('取得失敗...');
+        setDisplayUserName('取得失敗...');
       });
   }, [user_id]);
 
+  // ログイン中のユーザーの user_id を取得
+  useEffect(() => {
+    if (!userInfo.id) return;
+    getUserInfo(userInfo.id)
+      .then((res) => {
+        setMyUserId(res.user_id); // ここが string 型になる想定
+      })
+      .catch(() => {
+        setMyUserId(null);
+      });
+  }, [userInfo.id]);
+
   return (
     <div>
-      <h2>ユーザーネーム: {userName}</h2>
+      <h2>ユーザーネーム: {displayUserName}</h2>
       <h2>ユーザーID: {user_id}</h2>
-      {userInfo.id === Number(user_id)&& (
+
+      {myUserId === user_id && (
         <div>
-            <SEditButton onClick={() => navigate(`/edit`)}>プロフィールを編集</SEditButton>
+          <SEditButton onClick={() => navigate(`/edit`)}>プロフィールを編集</SEditButton>
         </div>
-       )}
+      )}
     </div>
   );
 }
