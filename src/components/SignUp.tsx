@@ -5,23 +5,29 @@ import styled from "styled-components";
 import { UserContext } from "../providers/UserProvider.tsx";
 //import { sign_in } from "../api/Auth.tsx";
 import { sign_up } from '../api/User.tsx';
-import { sign_in } from '../api/Auth.tsx';
+//import { sign_in } from '../api/Auth.tsx';
   
   export default function SignUp() {
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
+    const [name,   setName]   = useState("");
     const [userId, setUserId] = useState("");
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
-    //const { userInfo, setUserInfo } = useContext(UserContext);
+    const { userInfo, setUserInfo } = useContext(UserContext);
   
     //Registerボタンを押したときの関数
     const onSignUpClick = async () => {
         try {
-          await sign_up(userId, email, pass);      
-          alert("登録が完了しました！");
-  
-          await sign_in(userId, pass);
-      
+          const res = await sign_up(name, userId, email, pass);
+
+      // 2. 返却 { id, token } を Context へ
+          setUserInfo({
+            id:    res.data.id,
+            token: res.data.token,
+          });
+
+      // 3. そのままホームへ
+          navigate("/main");
         } catch (err: any) {
             console.error("登録エラー:", err);
             const message = err.response?.data?.message || err.message || "登録に失敗しました";
@@ -31,20 +37,39 @@ import { sign_in } from '../api/Auth.tsx';
   
     return (
       <SSignUpFrame>
+        {/* Name */}
         <SSignUpRow>
           <SSignUpLabel>
-            <label htmlFor="id">ID</label>
+            <label htmlFor="name">Name</label>
+          </SSignUpLabel>
+          <SSignUpInput>
+            <input
+              id="name"
+              value={name}
+              type="text"
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </SSignUpInput>
+        </SSignUpRow>
+
+        {/* User ID */}
+        <SSignUpRow>
+          <SSignUpLabel>
+            <label htmlFor="id">User&nbsp;ID</label>
           </SSignUpLabel>
           <SSignUpInput>
             <input
               id="id"
               value={userId}
               type="text"
-              onChange={(evt) => setUserId(evt.target.value)} //入力された文字列をuserIdとして更新
+              onChange={(e) => setUserId(e.target.value)}
+              required
             />
           </SSignUpInput>
         </SSignUpRow>
-  
+
+        {/* Password */}
         <SSignUpRow>
           <SSignUpLabel>
             <label htmlFor="password">Password</label>
@@ -54,25 +79,28 @@ import { sign_in } from '../api/Auth.tsx';
               id="password"
               value={pass}
               type="password"
-              onChange={(evt) => setPass(evt.target.value)}
+              onChange={(e) => setPass(e.target.value)}
+              required
             />
           </SSignUpInput>
         </SSignUpRow>
 
+        {/* Email */}
         <SSignUpRow>
           <SSignUpLabel>
-            <label htmlFor="email">email</label>
+            <label htmlFor="email">Email</label>
           </SSignUpLabel>
           <SSignUpInput>
             <input
               id="email"
               value={email}
               type="email"
-              onChange={(evt) => setEmail(evt.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </SSignUpInput>
         </SSignUpRow>
-  
+
         <SSignUpRow>
           <SLoginButton type="button" onClick={onSignUpClick}>
             Register

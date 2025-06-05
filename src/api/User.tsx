@@ -11,13 +11,14 @@ const getUserInfo = async (user_id: number) => {
   return res.data;
 };
 
-const sign_up = async (user_id: string, email: string, pass: string) => {
+const sign_up = async (name: string, user_id: string, email: string, pass: string) => {
   const data = {
-    name: user_id,
+    name: name,
+    user_id: user_id,
     email: email,
     password: pass
   };
-  const url = `http://localhost:3001/user?user_id=${user_id}&email=${email}&password=${pass}`;
+  const url = `http://localhost:3001/user?name={name}&user_id=${user_id}&email=${email}&password=${pass}`;
   const res = await axios.post(url,data);
   return res
 };
