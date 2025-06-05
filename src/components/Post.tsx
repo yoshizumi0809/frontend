@@ -1,6 +1,6 @@
 //一個一個の投稿に対する表示について
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from "styled-components";
 import { ReactNode } from 'react';
 import { deletePost, getList } from '../api/Post.tsx';
@@ -13,8 +13,15 @@ export default function Post(props: any) {
   const { post } = props;
   const { userInfo } = useContext(UserContext);
   const { setPostList, page } = useContext(PostListContext);
+  const [loginUserId, setLoginUserId] = useState<string>("");
   const navigate = useNavigate();
   const POSTS_PER_PAGE = 10;
+
+  useEffect(() => {
+  getUserInfo(post.user_id).then((res) => {
+    setLoginUserId(res.user_id); // ← ここでは「ログインID（文字列）」をセット
+  });
+}, [post.user_id]);
 
   console.log("自分のID:", userInfo.id, typeof userInfo.id);
   console.log("投稿者ID:", post.user_id, typeof post.user_id);
@@ -53,7 +60,7 @@ export default function Post(props: any) {
   return (
     <SPost>
       <div>
-        <SName onClick={() => navigate(`/users/${getUserInfo(post.user_id)}`)}>{post.user_name}</SName>
+        <SName onClick={() => navigate(`/users/${loginUserId}`)}>{post.user_name}</SName>
         <SDate>{getDateStr(post.created_at)}</SDate>
         {userInfo.id === post.user_id && (
           <span>
