@@ -14,12 +14,16 @@ export default function Post(props: any) {
   const { userInfo } = useContext(UserContext);
   const { setPostList, page } = useContext(PostListContext);
   const [loginUserId, setLoginUserId] = useState<string>("");
+  const [iconUrl, setIconUrl] = useState<string>("");
   const navigate = useNavigate();
   const POSTS_PER_PAGE = 10;
 
-  useEffect(() => {
+
+
+useEffect(() => {
   getUserInfo(post.user_id).then((res) => {
-    setLoginUserId(res.user_id); // ← ここでは「ログインID（文字列）」をセット
+    setLoginUserId(res.user_id);
+    setIconUrl(res.icon_url); // ← アイコンURLを取得
   });
 }, [post.user_id]);
 
@@ -60,6 +64,7 @@ export default function Post(props: any) {
   return (
     <SPost>
       <div>
+        <img src={iconUrl} alt="icon" width="30" height="30" style={{ borderRadius: '50%', verticalAlign: 'middle', marginRight: '6px' }} />
         <SName onClick={() => navigate(`/users/${loginUserId}`)}>{post.user_name}</SName>
         <SDate>{getDateStr(post.created_at)}</SDate>
         {userInfo.id === post.user_id && (

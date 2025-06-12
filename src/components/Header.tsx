@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../providers/UserProvider.tsx";
+import { getUserInfo } from '../api/User.tsx';
 import { getUser } from '../api/User.tsx';
 
 export default function Header() {
   const navigate = useNavigate();
   const [ userName, setUserName ] = useState("");
+  const [userId, setUserId] = useState("");
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   const logout = () => {
@@ -17,11 +19,18 @@ export default function Header() {
 
   useEffect(() => {
     const myGetUser = async () => {
-      const user = await getUser(userInfo.id, userInfo.token);
-      setUserName(user.name);
+      try {
+        const user = await getUserInfo(userInfo.id);
+        setUserName(user.name);
+        setUserId(user.user_id); // ← user_idを保存
+      } catch (err) {
+        console.error("ユーザー情報取得失敗", err);
+      }
     };
-    myGetUser();
-  }, []);
+    if (userInfo.id !== 0) {
+      myGetUser();
+    }
+  }, [userInfo.id]);
 
   return (
 
