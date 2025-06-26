@@ -14,13 +14,17 @@ export default function UserProfileContent(props: Props) {
   const navigate = useNavigate();
 
   const [displayUserName, setDisplayUserName] = useState('（読み込み中...）');
+  const [iconUrl, setIconUrl] = useState<string>("");
   const [myUserId, setMyUserId] = useState<string | null>(null); // ログイン中のユーザーの user_id
 
   // 表示対象ユーザーの名前を取得
   useEffect(() => {
     if (!user_id) return;
     getUserInfo(userInfo.id)
-      .then((res) => setDisplayUserName(res.name))
+      .then((res) => {
+        setDisplayUserName(res.name);
+        setIconUrl(res.icon_url);
+      })
       .catch(() => setDisplayUserName('取得失敗...'));
   }, [user_id]);
 
@@ -34,6 +38,7 @@ export default function UserProfileContent(props: Props) {
 
   return (
     <div>
+      <img src={iconUrl} alt="アイコン画像" />
       <h2>ユーザーネーム: {displayUserName}</h2>
       <h2>ユーザーID: {user_id}</h2>
 

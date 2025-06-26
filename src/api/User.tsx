@@ -23,7 +23,7 @@ const sign_up = async (name: string, user_id: string, email: string, pass: strin
   return res
 };
 
-const editUser = async (params: { id: number; user_id?: string; name?: string }) => {
+const editUser = async (params: { id: number; user_id?: string; name?: string, icon_url?: string }) => {
   const { id, ...updates } = params;
   const url = `http://localhost:3001/user/${id}`;
   const res = await axios.put(url, updates);  // 必要なフィールドだけ送る
