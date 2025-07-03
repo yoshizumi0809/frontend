@@ -20,7 +20,7 @@ export default function UserProfileContent(props: Props) {
   // 表示対象ユーザーの名前を取得
   useEffect(() => {
     if (!user_id) return;
-    getUserInfo(userInfo.id)
+    getUserInfo(userInfo.user_id)
       .then((res) => {
         setDisplayUserName(res.name);
         setIconUrl(res.icon_url);
@@ -30,11 +30,11 @@ export default function UserProfileContent(props: Props) {
 
   // ログイン中ユーザーの user_id を取得
   useEffect(() => {
-    if (!userInfo.id) return;
-    getUserInfo(userInfo.id)
+    if (!userInfo.user_id) return;
+    getUserInfo(userInfo.user_id)
       .then((res) => setMyUserId(res.user_id)) // <- ここでログイン中の user_id を取得
       .catch(() => setMyUserId(null));
-  }, [userInfo.id]);
+  }, [userInfo.user_id]);
 
   return (
     <div>

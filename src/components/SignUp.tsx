@@ -22,7 +22,7 @@ import { sign_up } from '../api/User.tsx';
 
       // 2. 返却 { id, token } を Context へ
           setUserInfo({
-            id:    res.data.id,
+            user_id:    res.data.id,
             token: res.data.token,
           });
 

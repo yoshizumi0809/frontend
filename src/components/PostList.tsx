@@ -25,15 +25,17 @@ export default function PostList() {
 		if (posts) {
 		  posts.forEach((p: any) => {
 			postList.push({
-			  id: p.id,
-			  user_name: p.user_name,
-			  user_id: p.user_id,
-			  content: p.content,	
-			  created_at: new Date(p.created_at),	
-			});			  });	
+				post_id:   p.post_id,
+				user_name: p.user_name,
+				user_id:   p.user_id,
+				login_id:  p.login_id,
+				content:   p.content,
+				created_at: new Date(p.created_at),
+			});			  
+		});	
 		}	
 		setPostList(postList);	
-	  }
+	}
 
 	  useEffect(() => {
 		getPostList();
@@ -43,14 +45,14 @@ export default function PostList() {
 		<>
 			<SPostList>
 			{postList.map((p) => (
-				<Post key={p.id} post={p} />
+				<Post key={p.post_id} post={p} />
 			))}
 			</SPostList>
 			<SReloadButton onClick={getPostList}>リロード</SReloadButton>
 		</>
 		
 	  );
-}
+	}
 
 const SPostList = styled.div`
   margin-top: 16px;

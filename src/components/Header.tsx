@@ -9,35 +9,39 @@ import { getUser } from '../api/User.tsx';
 export default function Header() {
   const navigate = useNavigate();
   const [ userName, setUserName ] = useState("");
-  const [userId, setUserId] = useState("");
+  const [ userId, setUserId ] = useState("");
+  const [ iconUrl, setIconUrl ] = useState<string>("");
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   const logout = () => {
-    setUserInfo({ id: 0, token: "" });
+    setUserInfo({ user_id: 0, token: "" });
     navigate("/");
   };
 
   useEffect(() => {
+    if (!userInfo.user_id || isNaN(userInfo.user_id)) return;
+
     const myGetUser = async () => {
       try {
-        const user = await getUserInfo(userInfo.id);
+        const user = await getUserInfo(userInfo.user_id);
         setUserName(user.name);
         setUserId(user.user_id); // ← user_idを保存
+        setIconUrl(user.icon_url);
       } catch (err) {
         console.error("ユーザー情報取得失敗", err);
       }
     };
-    if (userInfo.id !== 0) {
-      myGetUser();
-    }
-  }, [userInfo.id]);
+
+    myGetUser();
+  }, [userInfo.user_id]);
+
 
   return (
-
     <SHeader>
       <SLogo onClick={() => navigate(`/main`)}>MicroPost</SLogo>
       <SRightItem>
-        <SName onClick={() => navigate(`/users/${userInfo.id}`)}>{userName}</SName>
+        <SName onClick={() => navigate(`/users/${userInfo.user_id}`)}>{userName}</SName>
+        <SImg onClick={() => navigate(`/users/${userId}`)} src={iconUrl} alt="icon"/>
         <SLogout onClick={logout}>ログアウト</SLogout>
       </SRightItem>
     </SHeader>
@@ -45,10 +49,11 @@ export default function Header() {
 }
 
 const SHeader = styled.div`
-  background-color: #222222;
+  background-color: #800080;
   display: flex;
   flex-direction: row;
-  color: #F8F8F8;
+  position: relative; /* 自身の位置を決定 */
+  justify-content: space-between; /* 右側で等間隔にそろえる */
   padding-left: 8px;
   padding-right: 8px;
   height: 100%;
@@ -57,8 +62,16 @@ const SHeader = styled.div`
 const SLogo = styled.button`
   padding-top: 8px;
   padding-bottom: 8px;
+  position: absolute;
+  left: 50%; /* 親位置に対して左から50％の位置に配置 */
   text-align: center;
   justyify-content: start;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
 `
 
 const SRightItem = styled.div`
@@ -66,6 +79,15 @@ const SRightItem = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;
+`
+
+
+const SImg = styled.img`
+  width: 30px;
+  height: 30px;
+  borderRadius: '50%';
+  verticalAlign: 'middle';
+  marginRight: '6px';
 `
 
 const SName = styled.button`

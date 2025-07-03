@@ -2,10 +2,11 @@ import React, { createContext, Dispatch, SetStateAction, useState } from "react"
 
 // ポストを保持する型を定義
 export type PostType = {
-  id: number;
+  post_id:   number;   // ← id → post_id
   user_name: string;
-  user_id: number;
-  content: string;
+  user_id:   number;   // 内部 ID
+  login_id:  string;   // 公開 ID
+  content:   string;
   created_at: Date;
 };
 

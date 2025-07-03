@@ -20,7 +20,7 @@ import { sign_in } from "../api/Auth.tsx";
         console.log("レスポンス data.token:", ret.data.token);
       }
       setUserInfo({
-        id: ret.data.id,
+        user_id: ret.data.id,
         token: ret.data.token,
       });
       if (ret && ret.data && ret.data.token) {

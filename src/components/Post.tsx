@@ -27,7 +27,7 @@ useEffect(() => {
   });
 }, [post.user_id]);
 
-  console.log("自分のID:", userInfo.id, typeof userInfo.id);
+  console.log("自分のID:", userInfo.user_id, typeof userInfo.user_id);
   console.log("投稿者ID:", post.user_id, typeof post.user_id);
 
   const getDateStr = (dateObj: Date) => {
@@ -64,10 +64,10 @@ useEffect(() => {
   return (
     <SPost>
       <div>
-        <img src={iconUrl} alt="icon" width="30" height="30" style={{ borderRadius: '50%', verticalAlign: 'middle', marginRight: '6px' }} />
-        <SName onClick={() => navigate(`/users/${loginUserId}`)}>{post.user_name}</SName>
+        <SImg onClick={() => navigate(`/users/${post.login_id}`)} src={iconUrl} alt="icon"/>
+        <SName onClick={() => navigate(`/users/${post.login_id}`)}>{post.user_name}</SName>
         <SDate>{getDateStr(post.created_at)}</SDate>
-        {userInfo.id === post.user_id && (
+        {userInfo.user_id === post.user_id && (
           <span>
             <SDeleteButton onClick={onDeletePost}>投稿を削除</SDeleteButton>
           </span>
@@ -77,6 +77,14 @@ useEffect(() => {
     </SPost>
   );
 }
+
+const SImg = styled.img`
+  width: 30px;
+  height: 30px;
+  borderRadius: '50%';
+  verticalAlign: 'middle';
+  marginRight: '6px';
+`
 
 const SPost = styled.div`
   margin: 8px 0px;

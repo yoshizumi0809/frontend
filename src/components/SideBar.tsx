@@ -21,7 +21,7 @@ export default function SideBar() {
     const posts = await getList(userInfo.token);
 
     const postList: PostType[] = posts?.map((p: any) => ({
-      id: p.id,
+      post_id: p.post_id,
       user_name: p.user_name,
       user_id: p.user_id,
       content: p.content,
@@ -33,23 +33,25 @@ export default function SideBar() {
 
   /* ------------------------------ 投稿送信ボタン ------------------------------ */
   const onSendClick = async () => {
-    await post(String(userInfo.id), userInfo.token, msg);
+    await post(String(userInfo.user_id), userInfo.token, msg);
     await getPostList();
   };
 
   /* ----------------------- プロフィール（アイコン含む） ----------------------- */
   useEffect(() => {
     (async () => {
-      if (userInfo.id) {
-        const res = await getUserInfo(userInfo.id); // name, user_id, icon_url を取得
+      if (userInfo.user_id) {
+        const res = await getUserInfo(userInfo.user_id);
+        console.log('getUserInfo →', res);   // ★ ここ
         setProfile({
           name: res.name,
-          user_id: res.user_id,
+          user_id: res.user_id,     // ← ここが undefined ならレスポンスの key が違う
           icon_url: res.icon_url,
         });
       }
     })();
-  }, [userInfo.id]);
+  }, [userInfo.user_id]);
+
 
   return (
     <SSideBar>

@@ -10,7 +10,7 @@ export default function UserEdit(){
   const [ userName, setUserName ] = useState<string>('（読み込み中...）');
   const [ userId, setUserId ] = useState<string>('（読み込み中...）');
   const [iconUrl, setIconUrl] = useState<string>("");
-  const id = userInfo.id;
+  const id = userInfo.user_id;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,22 +41,25 @@ export default function UserEdit(){
       let newIconUrl = iconUrl;
 
       if (selectedFile) {
-        // FormData をここで作成して uploadImage に渡す
+        // FormData を作成して Cloudinary にアップロード
         const formData = new FormData();
         formData.append("file", selectedFile);
 
-        const result = await uploadImage(formData); // ← FormData を渡す
+        const result = await uploadImage(formData);
         newIconUrl = result.secure_url;
+        setIconUrl(newIconUrl); 
       }
 
       await editUser({ id, name: userName, user_id: userId, icon_url: newIconUrl });
 
       alert("編集完了しました！");
+      navigate(`/users/${userId}`);
     } catch (err) {
       alert("更新に失敗しました");
       console.error(err);
     }
   };
+
 
 
 

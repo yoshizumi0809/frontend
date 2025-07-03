@@ -6,8 +6,8 @@ const getUser = async (id: number, token: string) => {
   return res.data;
 };
 
-const getUserInfo = async (id: number) => {
-  const res = await axios.get(`http://localhost:3001/user/info/${id}`);
+const getUserInfo = async (user_id: number) => {
+  const res = await axios.get(`http://localhost:3001/user/info/${user_id}`);
   return res.data;
 };
 

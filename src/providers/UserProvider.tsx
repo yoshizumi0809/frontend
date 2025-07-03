@@ -4,7 +4,7 @@ import React from "react";
 // 保持する情報の型
 
 type UserInfo = {
-  id: number;
+  user_id: number;
   token: string;
 };
 
@@ -20,7 +20,7 @@ export const UserContext = createContext(
 export const UserProvider = (props: any) => {
   const { children } = props;
   // UserInfoを保持する変数と更新関数の作成
-  const [userInfo, setUserInfo] = useState<UserInfo>({ id: 0, token: ""});
+  const [userInfo, setUserInfo] = useState<UserInfo>({ user_id: 0, token: ""});
   return (
     //valueに格納されている変数を子componentが取得できるようにする。
     <UserContext.Provider value={{ userInfo, setUserInfo }}>
