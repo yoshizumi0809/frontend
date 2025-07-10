@@ -18,7 +18,6 @@ export default function PostList() {
 
 	const getPostList = async() => {
 		const posts = await getList(userInfo.token, start, POSTS_PER_PAGE);
-		console.log(posts);
 	
 		// getListで取得したポスト配列をコンテキストに保存する
 		let postList: Array<PostType> = [];

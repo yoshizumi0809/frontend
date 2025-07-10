@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUserIdByLoginId } from '../api/User';
+import { getUserIdByLoginId } from '../api/User.tsx';
 
 export function useUserIdByLoginId(login_id?: string) {
   const [user_id, setUser_id] = useState<number | undefined>(undefined);

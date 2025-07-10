@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-import { UserContext } from '../providers/UserProvider';
-import { useUserInfo } from '../hooks/useUserInfo';
-import { useUserIdByLoginId } from '../hooks/useUserIdByLoginId';
+import { UserContext } from '../providers/UserProvider.tsx';
+import { useUserInfo } from '../hooks/useUserInfo.ts';
+import { useUserIdByLoginId } from '../hooks/useUserIdByLoginId.ts';
+
 
 type Props = {
   login_id?: string;
@@ -17,7 +18,6 @@ export default function UserProfileContent({ login_id }: Props) {
   const { user_id } = useUserIdByLoginId(login_id);
 
   const target = useUserInfo(user_id);   
-  /* 3) ログイン中ユーザーの情報（編集権限判定用） */
   const me = useUserInfo(userInfo.user_id);
 
   return (
