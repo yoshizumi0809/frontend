@@ -11,6 +11,13 @@ const getUserInfo = async (user_id: number) => {
   return res.data;
 };
 
+const getUserIdByLoginId = async (login_id: string): Promise<number> => {
+  const url = `http://localhost:3001/user/id-by-login/${login_id}`;
+  const res = await axios.get(url);
+  return res.data; // 数値 (user_id) が返ることを期待
+};
+
+
 const sign_up = async (name: string, user_id: string, email: string, pass: string) => {
   const data = {
     name: name,
@@ -30,4 +37,4 @@ const editUser = async (params: { id: number; user_id?: string; name?: string, i
   return res.data;
 };
 
-export { getUser, sign_up, getUserInfo, editUser };
+export { getUser, sign_up, getUserInfo, editUser, getUserIdByLoginId };

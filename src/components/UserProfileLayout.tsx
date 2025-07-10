@@ -4,18 +4,18 @@ import styled from 'styled-components';
 import UserProfileContent from './UserProfileContent.tsx';
 
 type Props = {
-    user_id?: string;
+    login_id?: string;
 };
 
 export default function UserProfileLayout(props:Props){
-    const { user_id } = props;
+    const { login_id } = props;
     return (
     <>
       <SHeader>
         <Header></Header>
       </SHeader>
       <SBody>
-        <UserProfileContent user_id={user_id} />
+        <UserProfileContent login_id={login_id} />
       </SBody>
     </>
   );

@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from "styled-components";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../providers/UserProvider.tsx";
-import { getUserInfo } from '../api/User.tsx';
-import { getUser } from '../api/User.tsx';
+import { useUserInfo } from '../hooks/useUserInfo.ts';
+//import { useUserInfo } from '../hooks/useUserInfo'; // ← カスタムフックを使う！
 
 export default function Header() {
   const navigate = useNavigate();
-  const [ userName, setUserName ] = useState("");
-  const [ userId, setUserId ] = useState("");
-  const [ iconUrl, setIconUrl ] = useState<string>("");
   const { userInfo, setUserInfo } = useContext(UserContext);
 
   const logout = () => {
@@ -18,37 +14,21 @@ export default function Header() {
     navigate("/");
   };
 
-  useEffect(() => {
-    if (!userInfo.user_id || isNaN(userInfo.user_id)) return;
-
-    const myGetUser = async () => {
-      try {
-        const user = await getUserInfo(userInfo.user_id);
-        setUserName(user.name);
-        setUserId(user.user_id); // ← user_idを保存
-        setIconUrl(user.icon_url);
-        console.log(userInfo)
-      } catch (err) {
-        console.error("ユーザー情報取得失敗", err);
-      }
-    };
-
-    myGetUser();
-  }, [userInfo.user_id]);
-
-  
+  // カスタムフックでユーザー情報を取得
+  const { name, login_id, icon_url } = useUserInfo(userInfo.user_id);
 
 
   return (
     <SHeader>
       <SLogo onClick={() => navigate(`/main`)}>MicroPost</SLogo>
       <SRightItem>
-        <SImg onClick={() => navigate(`/users/${userId}`)} src={iconUrl} alt="icon"/>
+        <SImg onClick={() => navigate(`/users/${login_id}`)} src={icon_url} alt="icon" />
         <SLogout onClick={logout}>ログアウト</SLogout>
       </SRightItem>
     </SHeader>
   );
 }
+
 
 const SHeader = styled.div`
   background-color: #800080;
