@@ -45,7 +45,7 @@ export default function SideBar() {
         console.log('getUserInfo →', res);   // ★ ここ
         setProfile({
           name: res.name,
-          user_id: res.user_id,     // ← ここが undefined ならレスポンスの key が違う
+          user_id: res.login_id,     // ← ここが undefined ならレスポンスの key が違う
           icon_url: res.icon_url,
         });
       }

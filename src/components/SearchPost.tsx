@@ -23,7 +23,6 @@ export default function SearchPost(){
     return(
         
         <>
-            <span>メッセージを検索</span>
             <input
                 type="search"
                 value={searchText}

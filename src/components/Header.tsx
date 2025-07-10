@@ -27,6 +27,7 @@ export default function Header() {
         setUserName(user.name);
         setUserId(user.user_id); // ← user_idを保存
         setIconUrl(user.icon_url);
+        console.log(userInfo)
       } catch (err) {
         console.error("ユーザー情報取得失敗", err);
       }
@@ -35,12 +36,13 @@ export default function Header() {
     myGetUser();
   }, [userInfo.user_id]);
 
+  
+
 
   return (
     <SHeader>
       <SLogo onClick={() => navigate(`/main`)}>MicroPost</SLogo>
       <SRightItem>
-        <SName onClick={() => navigate(`/users/${userInfo.user_id}`)}>{userName}</SName>
         <SImg onClick={() => navigate(`/users/${userId}`)} src={iconUrl} alt="icon"/>
         <SLogout onClick={logout}>ログアウト</SLogout>
       </SRightItem>
@@ -60,19 +62,29 @@ const SHeader = styled.div`
 `
 
 const SLogo = styled.button`
-  padding-top: 8px;
-  padding-bottom: 8px;
-  position: absolute;
-  left: 50%; /* 親位置に対して左から50％の位置に配置 */
-  text-align: center;
-  justyify-content: start;
+  font-size: 24px; /* ← 文字サイズ大きく */
+  font-weight: bold;
+  color: white;
+
   background-color: transparent;
   border: none;
   cursor: pointer;
   outline: none;
-  padding: 0;
   appearance: none;
-`
+
+  /* 中央寄せのために flex を使う */
+  display: flex;
+  align-items: center; /* ← 上下中央揃え */
+  justify-content: center;
+
+  height: 100%;
+  padding: 0 16px;
+
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
 
 const SRightItem = styled.div`
   width:100%;
@@ -85,17 +97,14 @@ const SRightItem = styled.div`
 const SImg = styled.img`
   width: 30px;
   height: 30px;
-  borderRadius: '50%';
-  verticalAlign: 'middle';
-  marginRight: '6px';
-`
-
-const SName = styled.button`
-  padding-top: 8px;
-  padding-bottom: 8px;
-  text-align: center;
-  margin-right: 8px;
-`
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  background-color: white;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  margin: 0 6px;
+  cursor: pointer;
+`;
 
 const SLogout = styled.div`
   padding-top: 8px;

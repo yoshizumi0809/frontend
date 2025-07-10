@@ -32,7 +32,7 @@ export default function UserProfileContent(props: Props) {
   useEffect(() => {
     if (!userInfo.user_id) return;
     getUserInfo(userInfo.user_id)
-      .then((res) => setMyUserId(res.user_id)) // <- ここでログイン中の user_id を取得
+      .then((res) => setMyUserId(res.login_id)) // <- ここでログイン中の user_id を取得
       .catch(() => setMyUserId(null));
   }, [userInfo.user_id]);
 
