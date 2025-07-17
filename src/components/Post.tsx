@@ -78,7 +78,6 @@ export default function Post(props: any) {
   );
 }
 
-/* ----------------- styled-components ----------------- */
 
 const SPost = styled.div`
   margin: 8px 0px;

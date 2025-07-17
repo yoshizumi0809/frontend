@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../providers/UserProvider.tsx";
 import { useUserInfo } from '../hooks/useUserInfo.ts';
-//import { useUserInfo } from '../hooks/useUserInfo'; // ← カスタムフックを使う！
 
 export default function Header() {
   const navigate = useNavigate();
@@ -14,7 +13,6 @@ export default function Header() {
     navigate("/");
   };
 
-  // カスタムフックでユーザー情報を取得
   const { name, login_id, icon_url } = useUserInfo(userInfo.user_id);
 
 

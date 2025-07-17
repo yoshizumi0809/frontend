@@ -11,9 +11,7 @@ export default function UserEditLayout() {
         <Header />
       </SHeader>
 
-      {/* 中央寄せのためのコンテナ */}
       <SBody>
-        {/* 枠線と影を付けるカード */}
         <SCard>
           <UserEdit />
         </SCard>
@@ -22,7 +20,6 @@ export default function UserEditLayout() {
   );
 }
 
-/* ---------- layout 用スタイル ---------- */
 
 export const SHeader = styled.div`
   width: 100%;
@@ -30,7 +27,7 @@ export const SHeader = styled.div`
   box-shadow: 0 4px 4px #aaaaaa;
 `;
 
-/* 画面中央に配置 */
+
 export const SBody = styled.div`
   width: 100%;
   height: calc(100vh - 48px);
@@ -40,7 +37,7 @@ export const SBody = styled.div`
   background: #f8f8f8;       /* 任意：薄い背景色 */
 `;
 
-/* 枠線＋影を付けたカード */
+
 const SCard = styled.div`
   width: 420px;              /* お好みで */
   padding: 32px 40px;

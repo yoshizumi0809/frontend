@@ -36,7 +36,7 @@ export default function UserProfileContent({ login_id }: Props) {
 
 }
 
-/* ---------- styled-components ---------- */
+
 const SEditButton = styled.button`
   background-color: purple;
   padding: 8px 16px;
