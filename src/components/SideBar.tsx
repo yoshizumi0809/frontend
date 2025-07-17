@@ -114,7 +114,7 @@ const SSideBarTextArea = styled.textarea`
 `;
 
 const SSideBarButton = styled.button`
-  background-color: #222;      /* 通常時 */
+  background-color: #800080;      /* 通常時 */
   padding: 4px;
   border-radius: 8px;
   color: #fafafa;
