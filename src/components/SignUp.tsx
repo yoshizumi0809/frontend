@@ -21,10 +21,14 @@ import { sign_up } from '../api/User.tsx';
           const res = await sign_up(name, userId, email, pass);
 
       // 2. 返却 { id, token } を Context へ
+          console.log("user_id:", res.data.user_id);
+          console.log("token:", res.data.token);
+
           setUserInfo({
             user_id: res.data.user_id,
             token: res.data.token,
           });
+
 
       // 3. そのままホームへ
           navigate("/main");
@@ -120,28 +124,28 @@ import { sign_up } from '../api/User.tsx';
   `;
   
   const SSignUpRow = styled.div`
-    dixplay: inline-block; /* Probably a typo: should be "display" */
-    margin-top: 4px;
-    margin-bottom: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
   `;
-  
+
   const SSignUpLabel = styled.span`
     display: inline-block;
-    width: 25%;
-    vertical-align: top;
+    width: 100px;
     text-align: right;
-    margin-right: 4px;
+    margin-right: 8px;
   `;
-  
+
   const SSignUpInput = styled.span`
     display: inline-block;
-    width: auto;
-    vertical-align: top;
-    margin-left: 4px;
+    width: 200px;
   `;
+
   
   const SLoginButton = styled.button`
-    background-color: #444444;
+    background-color: #800080;
     color: #f0f0f0;
     padding: 4px 16px;
     border-radius: 8px;

@@ -15,7 +15,7 @@ export default function StartPage() {
 }
 
 const SButton = styled.button`
-    background-color: #444444;
+    background-color: #800080;
     color: #f0f0f0;
     padding: 4px 16px;
     border-radius: 8px;

@@ -15,9 +15,9 @@ export default function SearchPost(){
         .filter((post) => post.content.includes(searchText))
         .map((post) => ({
             ...post,
-        created_at: new Date(post.created_at), // ← ここが大事！
+        created_at: new Date(post.created_at),
     }));
-    setPostList(filtered); // 絞り込んだリストに置き換え（元に戻す機能もあとで入れると良い）
+    setPostList(filtered);
   };
 
     return(

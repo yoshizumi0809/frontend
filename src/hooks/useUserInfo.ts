@@ -15,7 +15,7 @@ export function useUserInfo(user_id: number | undefined) {
 
     getUserInfo(user_id)
       .then((res) => {
-        setLogin_id(res.user_id);
+        setLogin_id(res.login_id);
         setName(res.name);
         setEmail(res.email);
         setIcon_url(res.icon_url);

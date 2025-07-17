@@ -8,7 +8,7 @@ import { uploadImage } from '../api/Cloudinary.tsx';
 export default function UserEdit(){
   const { userInfo, setUserInfo } = useContext(UserContext);
   const [ userName, setUserName ] = useState<string>('（読み込み中...）');
-  const [ userId, setUserId ] = useState<string>('（読み込み中...）');
+  const [ login_id, setLogin_id ] = useState<string>('（読み込み中...）');
   const [iconUrl, setIconUrl] = useState<string>("");
   const id = userInfo.user_id;
   const navigate = useNavigate();
@@ -19,21 +19,24 @@ export default function UserEdit(){
     getUserInfo(id)
       .then((res) => {
         setUserName(res.name);
-        setUserId(res.user_id);
+        setLogin_id(res.login_id);
         setIconUrl(res.icon_url);
       })
       .catch(() => {
         setUserName('取得失敗...');
-        setUserId('取得失敗...');
+        setLogin_id('取得失敗...');
       });
   }, [id]);
 
   const iconRef = useRef<HTMLInputElement>(null);
   const editIcon = (e) => {
     const file = e.target.files?.[0];
+    if (!file) return;
     const localUrl = URL.createObjectURL(file);
     setIconUrl(localUrl);
-  }
+    setSelectedFile(file); // ← これが抜けている！！
+  };
+
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const handleFinishEdit = async () => {
@@ -41,19 +44,19 @@ export default function UserEdit(){
       let newIconUrl = iconUrl;
 
       if (selectedFile) {
-        // FormData を作成して Cloudinary にアップロード
         const formData = new FormData();
         formData.append("file", selectedFile);
 
         const result = await uploadImage(formData);
-        newIconUrl = result.secure_url;
-        setIconUrl(newIconUrl); 
+        newIconUrl = result.url || result.secure_url;
+        setIconUrl(newIconUrl);
       }
 
-      await editUser({ id, name: userName, user_id: userId, icon_url: newIconUrl });
+
+      await editUser({ user_id:id, name: userName, login_id: login_id, icon_url: newIconUrl });
 
       alert("編集完了しました！");
-      navigate(`/users/${userId}`);
+      navigate(`/users/${login_id}`);
     } catch (err) {
       alert("更新に失敗しました");
       console.error(err);
@@ -96,13 +99,13 @@ export default function UserEdit(){
       {/* ユーザーID（文字列、変更可） */}
       <SEditRow>
         <SEditLabel>
-          <label htmlFor="userId">ユーザーID</label>
+          <label htmlFor="login_id">ユーザーID</label>
         </SEditLabel>
         <SEditInput>
           <input
-            id="userId"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
+            id="login_id"
+            value={login_id}
+            onChange={(e) => setLogin_id(e.target.value)}
             type="text"
           />
         </SEditInput>
@@ -119,45 +122,46 @@ export default function UserEdit(){
 }
 
 const SIcon = styled.div`
-    position: relative;
+  position: relative;
 `
 
 const SEditIconButton = styled.button`
-    position: absolute;
-    color: white;
-    font-size: 100px;
-    top: 50%;
-    left: 50%;
+  position: absolute;
+  color: white;
+  font-size: 100px;
+  top: 50%;
+  left: 50%;
     transform: translate(-50%,-50%);
-    cursor: pointer;
+  cursor: pointer;
     background: none; /* 背景を消す */
     border: none; /* 枠を消す → ボタン感がなくなる */
 `
 
 const SEditRow = styled.div`
-    display: block;
-    margin-top: 4px;
-    margin-bottom: 4px;
-  `;
-  
-  const SEditLabel = styled.span`
-    display: inline-block;
-    width: 25%;
-    vertical-align: top;
-    text-align: right;
-    margin-right: 4px;
-  `;
-  
-  const SEditInput = styled.span`
-    display: inline-block;
-    width: auto;
-    vertical-align: top;
-    margin-left: 4px;
-  `;
+  display: block;
+  margin-top: 4px;
+  margin-bottom: 4px;
+`;
+const SEditLabel = styled.span`
+  display: inline-block;
+  width: 25%;
+  text-align: right;
+  margin-right: 4px;
+`;
+const SEditInput = styled.span`
+  display: inline-block;
+  margin-left: 4px;
+`;
+const SFinishEditButton = styled.button`
+  background-color: purple;      /* メイン色 */
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
 
-  const SFinishEditButton = styled.button`
-    background-color: #444444;
-    color: #f0f0f0;
-    padding: 4px 16px;
-    border-radius: 8px;
-  `;
+  &:hover {
+    background-color: #5e005e;   /* 濃いめの紫 */
+  }
+`;

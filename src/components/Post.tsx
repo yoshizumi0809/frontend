@@ -19,7 +19,7 @@ export default function Post(props: any) {
 
   useEffect(() => {
     getUserInfo(post.user_id).then((res) => {
-      setLoginUserId(res.user_id);
+      setLoginUserId(res.login_id);
       setIconUrl(res.icon_url);
     });
   }, [post.user_id]);

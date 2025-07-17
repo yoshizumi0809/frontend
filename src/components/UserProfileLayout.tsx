@@ -31,5 +31,7 @@ export const SBody = styled.div`
   width: 100%;
   height: calc(100vh - 48px);
   display: flex;
-  flex-direction: row;
+  justify-content: center;  // 横方向中央
+  align-items: center;      // 縦方向中央
+  background-color: #f8f8f8; // 必要なら背景色も調整
 `;

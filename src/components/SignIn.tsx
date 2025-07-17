@@ -77,28 +77,27 @@ import { sign_in } from "../api/Auth.tsx";
   `;
   
   const SSignInRow = styled.div`
-    dixplay: inline-block; /* Probably a typo: should be "display" */
-    margin-top: 4px;
-    margin-bottom: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
   `;
-  
+
   const SSignInLabel = styled.span`
     display: inline-block;
-    width: 25%;
-    vertical-align: top;
+    width: 100px;
     text-align: right;
-    margin-right: 4px;
+    margin-right: 8px;
   `;
-  
+
   const SSignInInput = styled.span`
     display: inline-block;
-    width: auto;
-    vertical-align: top;
-    margin-left: 4px;
+    width: 200px;
   `;
   
   const SLoginButton = styled.button`
-    background-color: #444444;
+    background-color: #800080;
     color: #f0f0f0;
     padding: 4px 16px;
     border-radius: 8px;
