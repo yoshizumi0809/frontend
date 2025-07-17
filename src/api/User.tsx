@@ -21,7 +21,7 @@ const getUserIdByLoginId = async (login_id: string): Promise<number> => {
 
 const sign_up = async (name: string, login_id: string, email: string, pass: string) => {
   const data = { name, login_id, email, password: pass };
-  const url = `${API_BASE_URL}/user?name=${name}&user_id=${login_id}&email=${email}&password=${pass}`;
+  const url = `${API_BASE_URL}/user`;
   const res = await axios.post(url, data);
   return res;
 };
